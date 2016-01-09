@@ -1,7 +1,7 @@
 /**
  *  ChordStack object holds info about a specific chord
  *  either increase or decrease the population.
- *  @author Gahwon Lee
+ *  @author Gahwon Lee, Henry Wang
  *  Period: 0
  *  Date: 01-05-16
  */
@@ -10,48 +10,49 @@
 public class ChordStack
 {
     private int root; //0=tonic, 6=subtonic/leading tone
-    private boolean isMinor; //true=minor root, false=major root
-    private boolean isSeventh; //true if chord is 7th, false if chord is triad
+    private boolean minor; //true=minor root, false=major root
+    private boolean seventh; //true if chord is 7th, false if chord is triad
     private int inversion; //0=none, 1=1st, 2=2nd, 3=3rd
     
     public ChordStack()
     {
     	root = 0;
-    	isMinor = false;
-    	isSeventh = false;
+    	minor = false;
+    	seventh = false;
     	inversion = 0;
     }
     public ChordStack(int rootGiven, boolean isMinorGiven)
     {
     	root = rootGiven;
-    	isMinor = isMinorGiven;
-    	isSeventh = false;
+    	minor = isMinorGiven;
+    	seventh = false;
     	inversion = 0;
     }
     public ChordStack(int rootGiven, boolean isMinorGiven, boolean isSeventhGiven)
     {
     	root = rootGiven;
-    	isMinor = isMinorGiven;
-    	isSeventh = isSeventhGiven;
+    	minor = isMinorGiven;
+    	seventh = isSeventhGiven;
     	inversion = 0;
     }
     public ChordStack(int rootGiven, boolean isMinorGiven, int invGiven)
     {
     	root = rootGiven;
-    	isMinor = isMinorGiven;
-    	isSeventh = (invGiven>2?true:false);
+    	minor = isMinorGiven;
+    	seventh = (invGiven>2?true:false);
     	inversion = invGiven;
     }
     public ChordStack(int rootGiven, boolean isMinorGiven, boolean isSeventhGiven, int invGiven)
     {
     	root = rootGiven;
-    	isMinor = isMinorGiven;
-    	isSeventh = isSeventhGiven;
+    	minor = isMinorGiven;
+    	seventh = isSeventhGiven;
     	inversion = invGiven;
     }
+    
     public ChordStack(String romanNum, boolean isMinorGiven)
     {
-    	isMinor = isMinorGiven;
+    	minor = isMinorGiven;
     	
     	if (romanNum.toLowerCase().indexOf("vii") != -1)
     		root = 6;
@@ -71,22 +72,22 @@ public class ChordStack
     	if (romanNum.indexOf("42") != -1)
     	{
     		inversion = 3;
-    		isSeventh = true;
+    		seventh = true;
     	}
     	else if (romanNum.indexOf("43") != -1)
     	{
     		inversion = 2;
-    		isSeventh = true;
+    		seventh = true;
     	}
     	else if (romanNum.indexOf("65") != -1)
     	{
     		inversion = 1;
-    		isSeventh = true;
+    		seventh = true;
     	}
     	else if (romanNum.indexOf("7") != -1)
     	{
     		inversion = 0;
-    		isSeventh = true;
+    		seventh = true;
     	}
     	else if (romanNum.indexOf("64") != -1)
     		inversion = 2;
@@ -105,14 +106,14 @@ public class ChordStack
     	return root;
     }
     
-    public boolean getIsMinor()
+    public boolean isMinor()
     {
-    	return isMinor;
+    	return minor;
     }
     
-    public boolean getIsSeventh()
+    public boolean isSeventh()
     {
-    	return isSeventh;
+    	return seventh;
     }
     
     public int getInversion()
@@ -122,7 +123,7 @@ public class ChordStack
     
     public String getFiguredBassInversion()
     {
-    	if (isSeventh)
+    	if (seventh)
     	{
     		if (inversion == 0)
     			return "7";
@@ -144,15 +145,16 @@ public class ChordStack
     	}
     }
     /**
-     *  returns number of steps between each notes in major/minor key
-     *  array[num] is between num note and (num+1)%7 note
+     * Identifies the intervals for each scale degree
+     * array[num] is between num note and (num+1)%7 note
+     * @return Array of steps for each scale degree starting from tonic note. 
      */
     public int[] getIntervals()
     {
     	int[] majorIntervals = {2,2,1,2,2,2,1};
     	int[] minorIntervals = {2,1,2,2,1,3,1};
     	
-    	if (isMinor)
+    	if (minor)
     		return minorIntervals;
     	return majorIntervals;
     }
@@ -201,24 +203,24 @@ public class ChordStack
      */
     public int[] getAllNotes()
     {
-    	int notes[] = new int[(isSeventh?4:3)];
+    	int notes[] = new int[(seventh?4:3)];
     	
     	notes[0] = getNote(root);
     	notes[1] = getNote(root + 2);
     	notes[2] = getNote(root + 4);
-    	if (isSeventh)
+    	if (seventh)
     		notes[3] = getNote(root + 6);
     	
     	return notes;
     }
     public int[] getAllNotes(int tonic)
     {
-    	int notes[] = new int[(isSeventh?4:3)];
+    	int notes[] = new int[(seventh?4:3)];
     	
     	notes[0] = getNote(root, tonic);
     	notes[1] = getNote(root + 2, tonic);
     	notes[2] = getNote(root + 4, tonic);
-    	if (isSeventh)
+    	if (seventh)
     		notes[3] = getNote(root + 6, tonic);
     	
     	return notes;
@@ -229,47 +231,47 @@ public class ChordStack
      */
     public int[] getAllNotes(boolean startFromBass)
     {
-    	int notes[] = new int[(isSeventh?4:3)];
+    	int notes[] = new int[(seventh?4:3)];
     	
     	notes[0] = getNote(root);
     	notes[1] = getNote(root + 2);
     	notes[2] = getNote(root + 4);
-    	if (isSeventh)
+    	if (seventh)
     		notes[3] = getNote(root + 6);
     	
     	if (!startFromBass)
     		return notes;
     	
-    	int newNotes[] = new int[(isSeventh?4:3)];
+    	int newNotes[] = new int[(seventh?4:3)];
     	
     	newNotes[0] = notes[inversion];
-    	newNotes[1] = notes[(inversion + 1) % (isSeventh?4:3)];
-    	newNotes[2] = notes[(inversion + 2) % (isSeventh?4:3)];
-    	if (isSeventh)
-    		newNotes[3] = notes[(inversion + 3) % (isSeventh?4:3)];
+    	newNotes[1] = notes[(inversion + 1) % (seventh?4:3)];
+    	newNotes[2] = notes[(inversion + 2) % (seventh?4:3)];
+    	if (seventh)
+    		newNotes[3] = notes[(inversion + 3) % (seventh?4:3)];
     	
     	return newNotes;
     }
     public int[] getAllNotes(boolean startFromBass, int tonic)
     {
-    	int notes[] = new int[(isSeventh?4:3)];
+    	int notes[] = new int[(seventh?4:3)];
     	
     	notes[0] = getNote(root, tonic);
     	notes[1] = getNote(root + 2, tonic);
     	notes[2] = getNote(root + 4, tonic);
-    	if (isSeventh)
+    	if (seventh)
     		notes[3] = getNote(root + 6, tonic);
     	
     	if (!startFromBass)
     		return notes;
     	
-    	int newNotes[] = new int[(isSeventh?4:3)];
+    	int newNotes[] = new int[(seventh?4:3)];
     	
     	newNotes[0] = notes[inversion];
-    	newNotes[1] = notes[(inversion + 1) % (isSeventh?4:3)];
-    	newNotes[2] = notes[(inversion + 2) % (isSeventh?4:3)];
-    	if (isSeventh)
-    		newNotes[3] = notes[(inversion + 3) % (isSeventh?4:3)];
+    	newNotes[1] = notes[(inversion + 1) % (seventh?4:3)];
+    	newNotes[2] = notes[(inversion + 2) % (seventh?4:3)];
+    	if (seventh)
+    		newNotes[3] = notes[(inversion + 3) % (seventh?4:3)];
     	
     	return newNotes;
     }
