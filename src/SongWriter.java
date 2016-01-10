@@ -2,8 +2,6 @@
  * ChordStack object holds info about a specific chord
  *  either increase or decrease the population.
  *  @author Gahwon Lee, Henry Wang
- *  Period: 0
- *  Date: 01-08-16
  */
 
 import java.io.*;

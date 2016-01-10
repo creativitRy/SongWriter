@@ -2,8 +2,6 @@
  *  ChordStack object holds info about a specific chord
  *  either increase or decrease the population.
  *  @author Gahwon Lee, Henry Wang
- *  Period: 0
- *  Date: 01-05-16
  */
 
 import java.util.*;
@@ -97,11 +95,8 @@ public class ChordStack
 		else
 			inversion = 0;
 	}
-	/* private int root; //0=tonic, 6=subtonic/leading tone
-	private boolean isMinor; //true=minor root, false=major root
-	private boolean isSeventh; //true if chord is 7th, false if chord is triad
-	private int inversion; //0=none, 1=1st, 2=2nd, 3=3rd
-	 */
+
+	//Getters
 	public int getRoot()
 	{
 		return root;
@@ -187,15 +182,11 @@ public class ChordStack
 	
 	public int getBassNote()
 	{
-		int bassNote = getNote(root + inversion * 2);
-		
-		return bassNote;
+		return getNote(root + inversion * 2);
 	}
 	public int getBassNote(int tonic)
 	{
-		int bassNote = getNote(root + inversion * 2, tonic);
-		
-		return bassNote;
+		return getNote(root + inversion * 2, tonic);
 	}
 	
 	/**
