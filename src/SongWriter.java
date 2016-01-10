@@ -5,10 +5,10 @@
  *  Period: 0
  *  Date: 01-08-16
  */
- 
-import java.io.File;
-import java.io.IOException;
-import java.util.Scanner;
+
+import java.io.*;
+import java.util.*;
+import javax.sound.midi.*;
 
 public class SongWriter
 {
@@ -55,6 +55,12 @@ public class SongWriter
         {
         	chords[i] = new ChordStack(chordsScn.next(), isMinor);
         }
-        
+
+        /*
+        steps:
+        1.
+
+         */
     }
+
 }
