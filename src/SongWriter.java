@@ -16,14 +16,31 @@ public class SongWriter
 	public static void main(String[] args) throws IOException
 	{
 		Scanner fileNameScn = new Scanner(System.in);
-		
-		System.out.print("Txt file name that contains Chord progressions?: ");
-		String fileName = fileNameScn.nextLine();
-		
-		if (fileName.indexOf(".txt") == -1)
-			fileName += ".txt";
-		
-		Scanner scn = new Scanner(new File(fileName));
+
+		Scanner scn;
+		outerloop:
+		while (true)
+		{
+			try
+			{
+				System.out.print("Txt file name that contains Chord progressions?: ");
+				String fileName = fileNameScn.nextLine();
+
+				if (fileName.indexOf(".txt") == -1)
+					fileName += ".txt";
+
+				scn = new Scanner(new File(fileName));
+
+				break outerloop;
+			}
+			catch (FileNotFoundException e)
+			{
+				System.out.println("\nFile does not exist. Please try again.");
+				System.out.println("Make sure you spelled it correctly since this is case-sensitive.");
+				System.out.println("This doesn't care whether you put .txt or not.\n");
+			}
+		}
+
 		String keyName = scn.next();
 		String minorKey = scn.next();
 		scn.nextLine();
@@ -71,7 +88,7 @@ public class SongWriter
 	 * given an array of stuff and an integer array representing the weight of the stuff, return a thing from the first array based on random weight
 	 * @param stuffs something is chosen randomly from here
 	 * @param weights these are the weights. higher means more chance of getting picked. x<=0 means no chance of getting picked
-	 * @param <T> whatever thing you want to get
+	 * @param <T> whatever thing you want to get. if primitive array, use wrappers
 	 * @return randomly picked thing
 	 */
 	public static <T> T calculateProbability(T[] stuffs, int[] weights)
