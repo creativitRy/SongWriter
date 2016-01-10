@@ -58,7 +58,7 @@ public class SongWriter
 
         /*
         steps:
-        1.
+        1. add bass notes
 
          */
     }
