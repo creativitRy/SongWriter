@@ -6,6 +6,7 @@
  *  Date: 01-05-16
  */
 
+import java.util.*;
 
 public class ChordStack
 {
@@ -275,4 +276,8 @@ public class ChordStack
     	
     	return newNotes;
     }
+	public String toString()
+	{
+		return Arrays.toString(getAllNotes(true));
+	}
 }
