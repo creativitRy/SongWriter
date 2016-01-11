@@ -74,12 +74,11 @@ public class SongWriter
 		steps:
 		1. analyze chords
 		2. apply resolution rules
-		3. write bass line
+		3. write bass line (within range C4-G2)
 		4. write random soprano line based on probability
 		5. write alto and tenor line based on probability
-		6. check for errors - if errors exist, redo 3-5
+		6. check for errors (parallel unison/5th/octaves, range of voice) - if errors exist, redo 3-5
 		7. write midi file
-
 		 */
 
 	}

@@ -3,7 +3,7 @@
  *  @author Henry Wang
  */
 public class NoteLetter implements Comparable<NoteLetter>{
-	private static final int[] letterIndexes = {8,10,0,2,3,5,7};
+	private static final int[] letterIndexes = {9,11,0,2,4,5,7};
 	
 	private final int letter;
 	private final int stepAdjust; //This determines whether if there is a sharp or flat.
@@ -26,27 +26,38 @@ public class NoteLetter implements Comparable<NoteLetter>{
 			this.letter = first - 'a';
 		}
 		
-		int index = 2; //Index where we should find the octave number
+		//int index = 2; //Index where we should find the octave number
 		int adjust = 0;
-		char second = name.charAt(1);
-		switch (name.charAt(1)) {
-		case '#': //Sharp
-			adjust = 1;
-			break;
-		case 'x': //Double-sharp
-			adjust = 2;
-			break;
-		case 'b': //Flat or Double-flat
-			if (name.charAt(2) == 'b') {
-				index++;
-				adjust = -2;
-			}else {
-				adjust = -1;
+		try
+		{
+			char second = name.charAt(1);
+			switch (name.charAt(1))
+			{
+				case '#': //Sharp
+					adjust = 1;
+					break;
+				case 'x': //Double-sharp
+					adjust = 2;
+					break;
+				case 'b': //Flat or Double-flat
+					if (name.charAt(2) == 'b')
+					{
+						//index++;
+						adjust = -2;
+					} else
+					{
+						adjust = -1;
+					}
+					break;
 			}
-			break;
-		default: //This note is natural. Next index should be a number
-			index--;
 		}
+		catch (StringIndexOutOfBoundsException e)
+		{
+			adjust = 0;
+		}
+
+		//default: //This note is natural. Next index should be a number
+			//index--;
 		stepAdjust = adjust;
 	}
 	
@@ -66,6 +77,46 @@ public class NoteLetter implements Comparable<NoteLetter>{
 	public NoteLetter(int letter, int stepAdjust) {
 		this.letter = letter;
 		this.stepAdjust = stepAdjust;
+	}
+
+	/**
+	 * Constructor for a Note with chromScaleIndex.
+	 * @param chromScaleIndex note where C has the index 0 and B has index of 11 (Always between 0 and 11).
+	 * @param preferFlat if true, uses flats if note is not in C Major. if false, uses sharps
+	 */
+	public NoteLetter(int chromScaleIndex, boolean preferFlat)
+	{
+		boolean needsStepAdjust = true;
+		int tempLetter = 0;
+		int tempStepAdjust = 0;
+
+		for (int i = 0; i<letterIndexes.length;i++)
+		{
+			if (letterIndexes[i] == chromScaleIndex)
+			{
+				tempLetter = i;
+				tempStepAdjust = 0;
+
+				needsStepAdjust = false;
+			}
+		}
+
+		if (needsStepAdjust)
+		{
+			for (int i = 0; i<letterIndexes.length;i++)
+			{
+				if ((letterIndexes[i] + (preferFlat ? -1 : 1)) == chromScaleIndex)
+				{
+					tempLetter = i;
+					tempStepAdjust = (preferFlat ? -1 : 1);
+
+					needsStepAdjust = false;
+				}
+			}
+		}
+
+		this.letter = tempLetter;
+		this.stepAdjust = tempStepAdjust;
 	}
 	
 	//Getters

@@ -3,7 +3,7 @@
  *  @author Henry Wang
  */
 public class Note implements Comparable<Note>{
-	private static final int[] letterIndexes = {8,10,0,2,3,5,7};
+	private static final int[] letterIndexes = {9,11,0,2,4,5,7};
 	
 	private final int letter;
 	private final int octave;
@@ -86,6 +86,89 @@ public class Note implements Comparable<Note>{
 		this.letter = letter;
 		this.octave = octave;
 		this.stepAdjust = stepAdjust;
+	}
+
+	/**
+	 * Constructor for a Note with chromScaleIndex. Octave number is set to 4.
+	 * @param chromScaleIndex note where C has the index 0 and B has index of 11 (Always between 0 and 11).
+	 * @param preferFlat if true, uses flats if note is not in C Major. if false, uses sharps
+	 */
+	public Note(int chromScaleIndex, boolean preferFlat)
+	{
+		boolean needsStepAdjust = true;
+		int tempLetter = 0;
+		int tempStepAdjust = 0;
+
+		for (int i = 0; i<letterIndexes.length;i++)
+		{
+			if (letterIndexes[i] == chromScaleIndex)
+			{
+				tempLetter = i;
+				tempStepAdjust = 0;
+
+				needsStepAdjust = false;
+			}
+		}
+
+		if (needsStepAdjust)
+		{
+			for (int i = 0; i<letterIndexes.length;i++)
+			{
+				if ((letterIndexes[i] + (preferFlat ? -1 : 1)) == chromScaleIndex)
+				{
+					tempLetter = i;
+					tempStepAdjust = (preferFlat ? -1 : 1);
+
+					needsStepAdjust = false;
+				}
+			}
+		}
+
+		this.letter = tempLetter;
+		this.stepAdjust = tempStepAdjust;
+		this.octave = 4;
+	}
+
+	/**
+	 * Constructor for a Note with chromScaleIndex. Octave number is set to 4.
+	 * @param chromScaleIndex note where C has the index 0 and B has index of 11 (Always between 0 and 11).
+	 * @param octaveNum octave number
+	 * @param preferFlat if true, uses flats if note is not in C Major. if false, uses sharps
+	 */
+	public Note(int chromScaleIndex, int octaveNum, boolean preferFlat)
+	{
+		boolean needsStepAdjust = true;
+		int tempLetter = 0;
+		int tempStepAdjust = 0;
+
+		for (int i = 0; i<letterIndexes.length;i++)
+		{
+			if (letterIndexes[i] == chromScaleIndex)
+			{
+				tempLetter = i;
+				tempStepAdjust = 0;
+
+				needsStepAdjust = false;
+			}
+		}
+
+		if (needsStepAdjust)
+		{
+			for (int i = 0; i<letterIndexes.length;i++)
+			{
+				if ((letterIndexes[i] + (preferFlat ? -1 : 1)) == chromScaleIndex)
+				{
+					tempLetter = i;
+					tempStepAdjust = (preferFlat ? -1 : 1);
+
+					needsStepAdjust = false;
+				}
+			}
+		}
+
+		this.letter = tempLetter;
+		this.stepAdjust = tempStepAdjust;
+		this.octave = octaveNum;
 	}
 	
 	//Getters
