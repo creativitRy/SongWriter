@@ -1,6 +1,5 @@
 /**
- * ChordStack object holds info about a specific chord
- *  either increase or decrease the population.
+ * SongWriter class is the main class that handles input and output.
  *  @author Gahwon Lee, Henry Wang
  */
 
@@ -12,6 +11,9 @@ public class SongWriter
 	public static NoteLetter key;
 	public static boolean isMinor;
 	public static String time;
+	public static int chordsAmount = 0;
+	public static ChordStack[] chords;
+	public static Note[][] notes;
 	
 	public static void main(String[] args) throws IOException
 	{
@@ -52,7 +54,7 @@ public class SongWriter
 		
 		String chordsOneString = scn.nextLine().trim();
 		
-		int chordsAmount = 0;
+		//int chordsAmount = 0;
 		Scanner chordsScnTemp = new Scanner(chordsOneString);
 		
 		while (chordsScnTemp.hasNext())
@@ -62,14 +64,6 @@ public class SongWriter
 		
 		//chordsScnTemp.close();
 		
-		Scanner chordsScn = new Scanner(chordsOneString);
-		ChordStack[] chords = new ChordStack[chordsAmount];
-		
-		for (int i = 0; i < chordsAmount; i++)
-		{
-			chords[i] = new ChordStack(chordsScn.next(), isMinor);
-		}
-
 		/*
 		steps:
 		1. analyze chords
@@ -77,9 +71,21 @@ public class SongWriter
 		3. write bass line (within range C4-G2)
 		4. write random soprano line based on probability
 		5. write alto and tenor line based on probability
-		6. check for errors (parallel unison/5th/octaves, range of voice) - if errors exist, redo 3-5
+		6. check for errors (parallel unison/5th/octaves, range of voice) - if errors exist, redo 3-5 (probably through recursion)
 		7. write midi file
 		 */
+
+
+		//1. analyze chords
+		Scanner chordsScn = new Scanner(chordsOneString);
+		chords = new ChordStack[chordsAmount];
+		
+		for (int i = 0; i < chordsAmount; i++)
+		{
+			chords[i] = new ChordStack(chordsScn.next(), isMinor);
+		}
+
+
 
 	}
 

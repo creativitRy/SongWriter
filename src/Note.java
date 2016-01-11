@@ -130,7 +130,7 @@ public class Note implements Comparable<Note>{
 	}
 
 	/**
-	 * Constructor for a Note with chromScaleIndex. Octave number is set to 4.
+	 * Constructor for a Note with chromScaleIndex.
 	 * @param chromScaleIndex note where C has the index 0 and B has index of 11 (Always between 0 and 11).
 	 * @param octaveNum octave number
 	 * @param preferFlat if true, uses flats if note is not in C Major. if false, uses sharps
