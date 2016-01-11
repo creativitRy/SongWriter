@@ -3,7 +3,6 @@
  *  @author Gahwon Lee, Henry Wang
  */
 
-import java.io.*;
 import java.util.*;
 
 public class NotePossibilities
@@ -11,6 +10,7 @@ public class NotePossibilities
 	private Note previousNote;
 	private ChordStack nextChord;
 	private ArrayList<Note> possibleNotes = new ArrayList<Note>();
+	private ArrayList<Integer> weights = new ArrayList<Integer>();
 
 	public NotePossibilities(Note previousNote, ChordStack nextChord)
 	{
@@ -52,7 +52,25 @@ public class NotePossibilities
 	 */
 	public void removeSuperJumps()
 	{
-
+		removeIntervals(12);
+	}
+	
+	/**
+	 * removes any notes with the same interval (either up or down) as the input
+	 * @param interval chromatic interval with d2 = 1, P8 = 12
+	 */
+	public void removeInterval(int interval)
+	{
+		
+	}
+	
+	/**
+	 * removes any notes with the same interval (either up or down) or more as the input
+	 * @param chromScaleIndex chromatic interval with d2 = 1, P8 = 12
+	 */
+	public void removeIntervals(int intervalMin)
+	{
+		
 	}
 
 	/**
@@ -78,6 +96,19 @@ public class NotePossibilities
 	public void removeAllExceptBassNote()
 	{
 
+	}
+	
+	/**
+	 * removes any notes within/outside range (for both pitch and octave number)
+	 * @param chromScaleIndexMin lowest chromatic pitch (inclusive)
+	 * @param octaveMin lowest octave number (inclusive)
+	 * @param chromScaleIndexMax highest chromatic pitch (inclusive)
+	 * @param octaveMin highest octave number (inclusive)
+	 * @param invert if true, remove pitches outside of range (exclusive)
+	 */
+	public void removePitchRange(int chromScaleIndexMin, int octaveMin, int chromScaleIndexMax, int octaveMax, boolean invert)
+	{
+		
 	}
 
 	/**
@@ -113,7 +144,7 @@ public class NotePossibilities
 		return stuffs[indexes[randomValue]];
 	}
 
-	//TODO: change int[] weights to arraylist of Integer
+	//TODO: change int[] weights to arraylist of Integer (or just create new object holding a Note note and int weight)
 	/**
 	 * given an arraylist of stuff and an integer array representing the weight of the stuff, return a thing from the first array based on random weight
 	 * @param stuffs something is chosen randomly from here
@@ -121,21 +152,21 @@ public class NotePossibilities
 	 * @param <T> whatever thing you want to get. if primitive array, use wrappers
 	 * @return randomly picked thing
 	 */
-	private <T> T calculateProbability(ArrayList<T> stuffs, int[] weights)
+	private <T> T calculateProbability(ArrayList<T> stuffs, ArrayList<Integer> weights)
 	{
-		if (stuffs.size() != weights.length)
-			throw new IllegalArgumentException("make sure the stuff array and the weight array have the same length");
+		if (stuffs.size() != weights.size())
+			throw new IllegalArgumentException("make sure the stuff arraylist and the weight arraylist have the same length");
 
 		int weightSum = 1; //starts with 1 because Math.random does not generate 1
-		for (int weight : weights)
+		for (Integer weight : weights)
 			weightSum += weight;
 
 		//array of indexes
-		int[] indexes = new int[weightSum];
+		int[] indexes = new int[weightSum - 1];
 		int index = 0;
-		for (int i = 0; i < weights.length; i++)
+		for (int i = 0; i < weights.size(); i++)
 		{
-			for (int j = 0; j < weights[i]; j++)
+			for (int j = 0; j < weights.get(i); j++)
 			{
 				indexes[index] = i;//stuffs[i];
 				index++;
