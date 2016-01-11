@@ -20,6 +20,7 @@ public class NotePossibilities
 		boolean temp;
 		if (SongWriter.isMinor)
 		{
+			//TODO: make exceptions for la and ti in melodic minor
 			int[] arr = {2, 7, 0, 5, 10, 3};
 			Arrays.sort(arr);
 			if (Arrays.binarySearch(arr, SongWriter.key.getChromScaleIndex() ) != -1)
