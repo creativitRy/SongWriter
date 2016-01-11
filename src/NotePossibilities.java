@@ -23,19 +23,13 @@ public class NotePossibilities
 			//TODO: make exceptions for la and ti in melodic minor
 			int[] arr = {2, 7, 0, 5, 10, 3};
 			Arrays.sort(arr);
-			if (Arrays.binarySearch(arr, SongWriter.key.getChromScaleIndex() ) != -1)
-				temp = true;
-			else
-				temp = false;
+			temp = (Arrays.binarySearch(arr, SongWriter.key.getChromScaleIndex() ) != -1);
 		}
 		else
 		{
 			int[] arr = {5, 10, 3, 8, 1, 6};
 			Arrays.sort(arr);
-			if (Arrays.binarySearch(arr, SongWriter.key.getChromScaleIndex() ) != -1)
-				temp = true;
-			else
-				temp = false;
+			temp = (Arrays.binarySearch(arr, SongWriter.key.getChromScaleIndex() ) != -1);
 		}
 
 		for (int i = 0; i < nextChord.getAllNotes().length; i++)
@@ -66,7 +60,7 @@ public class NotePossibilities
 	
 	/**
 	 * removes any notes with the same interval (either up or down) or more as the input
-	 * @param chromScaleIndex chromatic interval with d2 = 1, P8 = 12
+	 * @param intervalMin chromatic interval with d2 = 1, P8 = 12
 	 */
 	public void removeIntervals(int intervalMin)
 	{
@@ -103,7 +97,7 @@ public class NotePossibilities
 	 * @param chromScaleIndexMin lowest chromatic pitch (inclusive)
 	 * @param octaveMin lowest octave number (inclusive)
 	 * @param chromScaleIndexMax highest chromatic pitch (inclusive)
-	 * @param octaveMin highest octave number (inclusive)
+	 * @param octaveMax highest octave number (inclusive)
 	 * @param invert if true, remove pitches outside of range (exclusive)
 	 */
 	public void removePitchRange(int chromScaleIndexMin, int octaveMin, int chromScaleIndexMax, int octaveMax, boolean invert)
