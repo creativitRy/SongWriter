@@ -17,11 +17,31 @@ public class NotePossibilities
 		this.previousNote = previousNote;
 		this.nextChord = nextChord;
 
+		boolean temp;
+		if (SongWriter.isMinor)
+		{
+			int[] arr = {2, 7, 0, 5, 10, 3};
+			Arrays.sort(arr);
+			if (Arrays.binarySearch(arr, SongWriter.key.getChromScaleIndex() ) != -1)
+				temp = true;
+			else
+				temp = false;
+		}
+		else
+		{
+			int[] arr = {5, 10, 3, 8, 1, 6};
+			Arrays.sort(arr);
+			if (Arrays.binarySearch(arr, SongWriter.key.getChromScaleIndex() ) != -1)
+				temp = true;
+			else
+				temp = false;
+		}
+
 		for (int i = 0; i < nextChord.getAllNotes().length; i++)
 		{
-			possibleNotes.add(new Note(nextChord.getNote(i, SongWriter.key.getChromScaleIndex() ), previousNote.getOctave(), true));
-			possibleNotes.add(new Note(nextChord.getNote(i, SongWriter.key.getChromScaleIndex() ), previousNote.getOctave() - 1, true));
-			possibleNotes.add(new Note(nextChord.getNote(i, SongWriter.key.getChromScaleIndex() ), previousNote.getOctave() + 1, true));
+			possibleNotes.add(new Note(nextChord.getAllNotes(SongWriter.key.getChromScaleIndex() )[i], previousNote.getOctave(), temp));
+			possibleNotes.add(new Note(nextChord.getAllNotes(SongWriter.key.getChromScaleIndex() )[i], previousNote.getOctave() - 1, temp));
+			possibleNotes.add(new Note(nextChord.getAllNotes(SongWriter.key.getChromScaleIndex() )[i], previousNote.getOctave() + 1, temp));
 		}
 	}
 

@@ -144,7 +144,7 @@ public class ChordStack
 	 * array[num] is between num note and (num+1)%7 note
 	 * @return Array of steps for each scale degree starting from tonic note. 
 	 */
-	public int[] getIntervals()
+	private int[] getIntervals()
 	{
 		int[] majorIntervals = {2,2,1,2,2,2,1};
 		int[] minorIntervals = {2,1,2,2,1,3,1};
