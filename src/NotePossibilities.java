@@ -46,6 +46,40 @@ public class NotePossibilities
 		}
 	}
 
+	//TODO: things below
+	/**
+	 * removes notes that form a complex interval with the previous note (more than an octave)
+	 */
+	public void removeSuperJumps()
+	{
+
+	}
+
+	/**
+	 * removes any notes with the same pitch as the input
+	 * @param chromScaleIndex chromatic note with C=0 and B=11
+	 */
+	public void removePitch(int chromScaleIndex)
+	{
+
+	}
+
+	/**
+	 * removes any notes that have the same pitch as the bass of the chord
+	 */
+	public void removeBassNote()
+	{
+		removePitch(nextChord.getBassNote(SongWriter.key.getChromScaleIndex()));
+	}
+
+	/**
+	 * removes any notes that does NOT have the same pitch as the bass of the chord
+	 */
+	public void removeAllExceptBassNote()
+	{
+
+	}
+
 	/**
 	 * given an array of stuff and an integer array representing the weight of the stuff, return a thing from the first array based on random weight
 	 * @param stuffs something is chosen randomly from here
@@ -64,16 +98,52 @@ public class NotePossibilities
 
 		//array of indexes
 		int[] indexes = new int[weightSum];
+		int index = 0;
 		for (int i = 0; i < weights.length; i++)
 		{
 			for (int j = 0; j < weights[i]; j++)
 			{
-				indexes[j] = i;//stuffs[i];
+				indexes[index] = i;//stuffs[i];
+				index++;
 			}
 		}
 
 		int randomValue = (int) (Math.random() * weightSum);
 
 		return stuffs[indexes[randomValue]];
+	}
+
+	//TODO: change int[] weights to arraylist of Integer
+	/**
+	 * given an arraylist of stuff and an integer array representing the weight of the stuff, return a thing from the first array based on random weight
+	 * @param stuffs something is chosen randomly from here
+	 * @param weights these are the weights. higher means more chance of getting picked. x<=0 means no chance of getting picked
+	 * @param <T> whatever thing you want to get. if primitive array, use wrappers
+	 * @return randomly picked thing
+	 */
+	private <T> T calculateProbability(ArrayList<T> stuffs, int[] weights)
+	{
+		if (stuffs.size() != weights.length)
+			throw new IllegalArgumentException("make sure the stuff array and the weight array have the same length");
+
+		int weightSum = 1; //starts with 1 because Math.random does not generate 1
+		for (int weight : weights)
+			weightSum += weight;
+
+		//array of indexes
+		int[] indexes = new int[weightSum];
+		int index = 0;
+		for (int i = 0; i < weights.length; i++)
+		{
+			for (int j = 0; j < weights[i]; j++)
+			{
+				indexes[index] = i;//stuffs[i];
+				index++;
+			}
+		}
+
+		int randomValue = (int) (Math.random() * weightSum);
+
+		return stuffs.get(indexes[randomValue]);
 	}
 }

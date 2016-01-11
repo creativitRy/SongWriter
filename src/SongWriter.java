@@ -14,6 +14,7 @@ public class SongWriter
 	public static int chordsAmount = 0;
 	public static ChordStack[] chords;
 	public static Note[][] notes;
+	public static NotePossibilities[][] possibleNotes;
 	
 	public static void main(String[] args) throws IOException
 	{
@@ -87,37 +88,6 @@ public class SongWriter
 
 
 
-	}
-
-	/**
-	 * given an array of stuff and an integer array representing the weight of the stuff, return a thing from the first array based on random weight
-	 * @param stuffs something is chosen randomly from here
-	 * @param weights these are the weights. higher means more chance of getting picked. x<=0 means no chance of getting picked
-	 * @param <T> whatever thing you want to get. if primitive array, use wrappers
-	 * @return randomly picked thing
-	 */
-	public static <T> T calculateProbability(T[] stuffs, int[] weights)
-	{
-		if (stuffs.length != weights.length)
-			throw new IllegalArgumentException("make sure the stuff array and the weight array have the same length");
-
-		int weightSum = 1; //starts with 1 because Math.random does not generate 1
-		for (int weight : weights)
-			weightSum += weight;
-
-		//array of indexes
-		int[] indexes = new int[weightSum];
-		for (int i = 0; i < weights.length; i++)
-		{
-			for (int j = 0; j < weights[i]; j++)
-			{
-				indexes[j] = i;//stuffs[i];
-			}
-		}
-
-		int randomValue = (int) (Math.random() * weightSum);
-
-		return stuffs[indexes[randomValue]];
 	}
 
 }
