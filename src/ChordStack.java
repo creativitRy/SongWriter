@@ -154,12 +154,12 @@ public class ChordStack
 		return majorIntervals;
 	}
 	
-	public int getNote(int noteNum)
+	public int getNote(int noteNum) //0-7
 	{
 		int note = 0;
 		int[] intervals = getIntervals();
 			
-		for (int i = 0; i < (noteNum % 12); i++)
+		for (int i = 0; i < (noteNum % 8); i++)
 		{
 			note = (note + intervals[i]) % 12;
 		}
@@ -171,7 +171,7 @@ public class ChordStack
 		int note = tonic;
 		int[] intervals = getIntervals();
 			
-		for (int i = 0; i < (noteNum % 12); i++)
+		for (int i = 0; i < (noteNum % 8); i++)
 		{
 			note = (note + intervals[i]) % 12;
 		}

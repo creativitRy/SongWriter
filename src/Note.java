@@ -198,6 +198,24 @@ public class Note implements Comparable<Note>{
 		return letterIndexes[letter] + stepAdjust + octave * 12;
 	}
 	
+	public String toString()
+	{
+		char letterChar = (char) (letter + 97);
+		String accidental;
+		if (stepAdjust == 1)
+			accidental = "#";
+		else if (stepAdjust == 2)
+			accidental = "x";
+		else if (stepAdjust == -1)
+			accidental = "b";
+		else if (stepAdjust == -2)
+			accidental = "bb";
+		else
+			accidental = "";
+		
+		return letterChar + accidental + octave;
+	}
+	
 	/**
 	 * Compares two notes whether which one is higher or lower. Returns a negative number if this note is lower then other note, and vice versa.
 	 * @param o the other note to compare with.
