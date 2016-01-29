@@ -53,9 +53,9 @@ public class MidiFile
     public MidiFile(int resolution, ArrayList<MidiTrack> tracks)
     {
         mResolution = resolution >= 0 ? resolution : DEFAULT_RESOLUTION;
-
+        
         mTracks = tracks != null ? tracks : new ArrayList<MidiTrack>();
-        mTrackCount = tracks.size();
+        mTrackCount = mTracks.size();
         mType = mTrackCount > 1 ? 1 : 0;
     }
 
